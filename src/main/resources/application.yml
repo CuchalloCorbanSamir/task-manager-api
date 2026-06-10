@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: task-manager-api
+
+  profiles:
+    default: local
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+
+  sql:
+    init:
+      mode: never
+
+  security:
+    user:
+      name: admin
+      password: admin123

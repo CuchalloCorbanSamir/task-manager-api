@@ -1,0 +1,42 @@
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+
+    environment:
+      POSTGRES_DB: taskmanager
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  task-manager:
+    image: task-manager-api
+    container_name: task-manager
+
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - postgres
+
+  angular-ui:
+    image: task-manager-ui
+    container_name: angular-ui
+
+    ports:
+      - "4200:80"
+
+    depends_on:
+      - task-manager
+
+volumes:
+  postgres_data:

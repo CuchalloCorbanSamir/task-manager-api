@@ -1,0 +1,69 @@
+package com.samir.task_manager_api.controller;
+
+import com.samir.task_manager_api.service.TaskService;
+
+import org.junit.jupiter.api.Test;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+
+import org.springframework.security.test.context.support.WithMockUser;
+
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.samir.task_manager_api.security.JwtService;
+import com.samir.task_manager_api.security.CustomUserDetailsService;
+
+@WebMvcTest(TaskController.class)
+@AutoConfigureMockMvc(addFilters = false)
+class TaskControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockitoBean
+    private TaskService service;
+
+    @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
+    private CustomUserDetailsService userDetailsService;
+
+    @Test
+    @WithMockUser(
+            username = "admin",
+            roles = {"ADMIN"})
+    void shouldReturn200ForAdmin()
+            throws Exception {
+
+        mockMvc.perform(get("/api/tasks"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(
+            username = "user1",
+            roles = {"USER"})
+    void shouldReturn200ForUser()
+            throws Exception {
+
+        mockMvc.perform(get("/api/tasks"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldReturnUnauthorized()
+            throws Exception {
+
+        mockMvc.perform(get("/api/tasks"))
+                .andExpect(status().isUnauthorized());
+    }
+}
