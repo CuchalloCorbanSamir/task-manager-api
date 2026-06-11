@@ -21,6 +21,9 @@ services:
 
     environment:
       SPRING_PROFILES_ACTIVE: docker
+      DB_URL: jdbc:postgresql://postgres:5432/taskmanager
+      DB_USER: postgres
+      DB_PASSWORD: postgres
 
     ports:
       - "8080:8080"
