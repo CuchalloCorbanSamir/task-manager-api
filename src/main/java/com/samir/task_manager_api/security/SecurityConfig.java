@@ -16,8 +16,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Configuration
 public class SecurityConfig {
+
+        @Value("${app.cors.allowed-origin}")
+        private String allowedOrigin;
 
         private final JwtAuthenticationFilter jwtFilter;
 
@@ -90,6 +95,9 @@ public class SecurityConfig {
                 List.of("*"));
 
         configuration.setAllowCredentials(true);
+
+        configuration.setAllowedOrigins(
+                List.of(allowedOrigin));
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
