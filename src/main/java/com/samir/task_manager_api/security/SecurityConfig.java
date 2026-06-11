@@ -81,8 +81,7 @@ public class SecurityConfig {
 
         configuration.setAllowedOrigins(
                 List.of(
-                        "http://localhost:4200",
-                        "https://task-manager-ui-latest.onrender.com"));
+                        "http://localhost:4200"));
 
         configuration.setAllowedMethods(
                 List.of(
