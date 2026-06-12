@@ -34,10 +34,16 @@ public class AuthController {
 public ResponseEntity<LoginResponse> login(
         @RequestBody LoginRequest request) {
 
+    System.out.println("Username recibido: "
+            + request.getUsername());
+
     User user = userRepository
             .findByUsername(
                     request.getUsername())
             .orElse(null);
+
+    System.out.println("Usuario encontrado: "
+            + (user != null));
 
     if (user == null) {
 
@@ -50,6 +56,9 @@ public ResponseEntity<LoginResponse> login(
             passwordEncoder.matches(
                     request.getPassword(),
                     user.getPassword());
+
+    System.out.println("Password match: "
+            + passwordMatches);
 
     if (!passwordMatches) {
 
