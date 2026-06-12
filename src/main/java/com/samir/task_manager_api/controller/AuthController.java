@@ -33,7 +33,7 @@ public class AuthController {
 @PostMapping("/login")
 public ResponseEntity<LoginResponse> login(
         @RequestBody LoginRequest request) {
-
+        System.out.println("VERSION NUEVA 2026-06-12");
     System.out.println("Username recibido: "
             + request.getUsername());
 
